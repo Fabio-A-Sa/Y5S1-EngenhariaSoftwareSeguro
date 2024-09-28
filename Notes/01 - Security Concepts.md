@@ -27,3 +27,11 @@ Além disso, são importantes os conceitos:
 - `Attack`: exploração da vulnerabilidade;
 - `Contermeasure`: prevenção, deteção ou minimização do risco;
 
+## Network Attacks
+
+### Passive
+
+
+
+### Active
+
