@@ -19,4 +19,11 @@ Além disso, são importantes os conceitos:
 - `Moderate`: efeito sério com degradação;
 - `Low`: efeito limitado, apenas alguma degradação ou perda;
 
+## Threat Model
+
+- `Vulnerability`: falhas que podem resultar em danos;
+- `Threats`: potencial violação de segurança de um recurso ou conjunto de recursos; 
+- `Exploitation`: utilização das vulnerabilidades para alterar as propriedades de segurança CIA num sistema;
+- `Attack`: exploração da vulnerabilidade;
+- `Contermeasure`: prevenção, deteção ou minimização do risco;
 
