@@ -31,7 +31,18 @@ Além disso, são importantes os conceitos:
 
 ### Passive
 
+Por exemplo `eavesdropping`, que não afecta os assets na rede mas consegue:
 
+- Analisar o tráfego na rede;
+- Encontrar e explorar as mensagens trocadas;
+- É difícil de detectar porque não há alteração dos dados;
+- Pode ser prevenida usando encriptação;
 
 ### Active
 
+Exemplos de ataques ativos (que modificam a rede) de active:
+
+- 
+- 
+- 
+- 
