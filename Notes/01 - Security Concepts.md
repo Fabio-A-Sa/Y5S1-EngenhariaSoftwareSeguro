@@ -12,6 +12,9 @@ Além disso, são importantes os conceitos:
 
 - `Authenticity`: propriedade de ser genuíno, verificado e confiável;
 - `Accountability`: o sistema mantém logs de todas as atividades para futura análise;
+- `Policy`: descrição do que é ou não permitido;
+- `Mechanism`: procedimento para forçar a policy a ser cumprida;
+- `Attack tree`: branching hierárquica que representa um conjunto de potenciais vulnerabilidades;
 
 ## Lack of security impacts
 
