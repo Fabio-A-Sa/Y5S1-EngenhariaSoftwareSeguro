@@ -16,6 +16,22 @@ Além disso, são importantes os conceitos:
 - `Mechanism`: procedimento para forçar a policy a ser cumprida;
 - `Attack tree`: branching hierárquica que representa um conjunto de potenciais vulnerabilidades;
 
+## Fundamental Security Design Principles
+
+Só alguns de vários exemplos:
+
+- Economu of Mechanisms / Keep it Simple;
+- Fail-safe default;
+- Zero Trust;
+- Opening design;
+- Design by contract;
+- Separation Privileges;
+- Least Privilege;
+- Isolation;
+- Encapsulation;
+- Modularity;
+- Layering / Defense in depth;
+
 ## Lack of security impacts
 
 - `High`: catastrófico com efeito adverso para as operações, assets e indivíduos;
