@@ -10,8 +10,18 @@
 
 ## TM Steps
 
-- `Vision`: caracterização do sistema em cenários, requisitos, 
-- `Diagram`: 
-- `Identify Threads`: 
+- `Vision`: caracterização do sistema em cenários, requisitos, comportamentos esperados;
+- `Diagram`: representação do sistema em modelo UML ou DFG (data flow diagram);
+- `Identify Threads`: externas às *trust boundaries*, using STRIDE methodology;
 - `Mitigate`: 
 - `Validate`: 
+
+## STRIDE
+
+- `S`poofing - fazer-se passar por outra entidade;
+- `T`ampering - modificação de dados ou código;
+- `R`epudiation - impedir alguém que diga que não fez determinada ação;
+- `I`nformation disclosure - expor informação a alguém que não estava autorizada a vê-la;
+- `D`enial of Service - degradação dos serviços para os utilizadores finais;
+- `E`levation of privilege - ganhar capacidades no sistema sem autorização para tal;
+
