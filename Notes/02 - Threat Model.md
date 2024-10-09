@@ -8,13 +8,13 @@
 - `Attack`: exploração da vulnerabilidade;
 - `Contermeasure`: prevenção, deteção ou minimização do risco;
 
-## TM Steps
+## Threat Modeling Steps
 
 - `Vision`: caracterização do sistema em cenários, requisitos, comportamentos esperados;
 - `Diagram`: representação do sistema em modelo UML ou DFG (data flow diagram);
 - `Identify Threads`: externas às *trust boundaries*, using STRIDE methodology;
 - `Mitigate`: Analisando por exemplo as attack trees (é a threat decomposta por sectores e elementos);
-- `Validate`: 
+- `Validate`: Verificar se todas as possíveis threats foram cobertas e analisadas;
 
 ## STRIDE
 
