@@ -13,7 +13,7 @@
 - `Vision`: caracterização do sistema em cenários, requisitos, comportamentos esperados;
 - `Diagram`: representação do sistema em modelo UML ou DFG (data flow diagram);
 - `Identify Threads`: externas às *trust boundaries*, using STRIDE methodology;
-- `Mitigate`: 
+- `Mitigate`: Analisando por exemplo as attack trees (é a threat decomposta por sectores e elementos);
 - `Validate`: 
 
 ## STRIDE
@@ -25,3 +25,14 @@
 - `D`enial of Service - degradação dos serviços para os utilizadores finais;
 - `E`levation of privilege - ganhar capacidades no sistema sem autorização para tal;
 
+STRIDE deve ser aplicado a todos os elementos do diagrama resultante do procesos de Threat Model.
+
+## DREAD Evaluation
+
+DREAD é uma framework usada para avaliar o risco de um potencial ataque:
+
+- Damage
+- Reproducibility
+- Exploitability
+- Affected Users
+- Discoverability
