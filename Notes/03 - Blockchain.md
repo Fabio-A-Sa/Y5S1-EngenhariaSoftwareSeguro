@@ -16,3 +16,6 @@ Blockchain uses transactions based on Digital Signatures to initiate the process
 - `Validation of transaction`: using Proof of Work;
 - `Creating a new chain block`: using hash functions;
 
+## Ethereum
+
+Pode ser usado com as bibliotecas `web3`, `ethers` e `geth`, como visto na SEED Lab correspondente. Há criação de *Smart Contracts* e *Accounts*.
