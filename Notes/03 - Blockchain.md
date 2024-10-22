@@ -19,3 +19,26 @@ Blockchain uses transactions based on Digital Signatures to initiate the process
 ## Ethereum
 
 Pode ser usado com as bibliotecas `web3`, `ethers` e `geth`, como visto na SEED Lab correspondente. Há criação de *Smart Contracts* e *Accounts*.
+
+### Accounts:
+
+Admite dois tipos de contas:
+
+- `Externally owned account` (EOA), que é controlado por private keys;
+- `Contract account` (CA), que contém o EVM (Ethereum Virtual Machine) code;
+
+160 bits são usados para identificar as contas, se for EOA usa private keys, se for CA usa o sender address e um nonce.
+
+### Transactions
+
+- `Contract creation`, que cria um contract account;
+- `Message call`, que cria uma mensagem entre um EOA e um (EOA ou CA);
+
+### Messages
+
+Podem ser triggered usando:
+
+- transações, entre um EOA e uma Account;
+- EVM code, entre um Contract Account e uma Account;
+
+Desisto.
