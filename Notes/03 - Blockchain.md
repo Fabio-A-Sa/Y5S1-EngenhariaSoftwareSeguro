@@ -41,4 +41,63 @@ Podem ser triggered usando:
 - transações, entre um EOA e uma Account;
 - EVM code, entre um Contract Account e uma Account;
 
-Desisto.
+--- 
+
+## What is Blockchain?
+
+Blockchain is a distributed database that can only grow with new data, acting as a ledger. It is organized as a chain of data blocks, each block contains a collection of transactions. Transactions are cryptographically secured, ensuring non-repudiation (the sender cannot deny their transaction). Ownership transfers are a common use of blockchain transactions. The ledger is maintained by a peer-to-peer network, which eliminates the need for a central authority.
+
+- `Centralized Systems`: a single server holds and controls all data, defining the state. All clients rely on this single server for transactions and data consistency;
+- `Distributed Systems`: the ledger is replicated across many nodes. Nodes use a consensus protocol to agree on the true state and verify new transactions. This decentralization ensures resilience and security.
+
+## How Blockchain Works
+
+Users initiate a transaction by submitting data to the network. Block Creation: Transactions are grouped into blocks. Consensus: The network nodes agree on the validity of the block through consensus mechanisms (e.g., Proof of Work, Proof of Stake). Chain Addition: Validated blocks are cryptographically linked to the previous block, creating an immutable chain.
+
+- `Hashing`: Ensures data integrity by converting transaction data into a fixed-length string;
+- `Digital Signatures`: Verify the identity of transaction senders and ensure authenticity;
+- `Encryption`: Protects sensitive transaction data from unauthorized access;
+
+### Properties
+
+- `Immutability`: Data cannot be altered or deleted once added to the blockchain;
+- `Transparency`: Transactions are publicly verifiable;
+- `Decentralization`: No single entity controls the blockchain;
+- `Security`: Achieved through cryptographic techniques and consensus protocols;
+
+## Ethereum Blockchain
+
+Ethereum extends blockchain functionality by supporting smart contracts and decentralized applications (DApps).
+It features its own cryptocurrency, Ether (ETH).
+Nodes:
+Nodes in Ethereum store the blockchain’s state, process transactions, and execute smart contracts.
+8. Ethereum Virtual Machine (EVM) and Smart Contracts
+EVM:
+Acts as a decentralized computational environment where smart contracts are executed.
+Ensures security and prevents interference between contracts.
+Smart Contracts:
+Self-executing contracts with terms encoded directly in code.
+Used in various applications, including decentralized finance (DeFi) and automated processes.
+9. Types of Accounts and Transactions
+Accounts:
+Externally Owned Accounts (EOAs): Controlled by private keys (individuals or organizations).
+Contract Accounts: Smart contract accounts that execute code upon receiving transactions.
+Transactions:
+Include details such as sender, recipient, value, data payload, and gas fees.
+Must be signed with the sender’s private key for authentication.
+10. Gas and Fees
+Gas:
+A unit measuring the computational effort required to execute transactions or operations on the Ethereum network.
+Fees:
+Paid in Ether, gas fees incentivize miners or validators and regulate network usage to prevent spam.
+11. Developer Tools
+Geth Architecture:
+Geth (Go Ethereum) is a popular Ethereum client used to interact with the blockchain, deploy contracts, and manage nodes.
+Solidity Compiler:
+Converts Solidity code into bytecode that the EVM can execute.
+Remix IDE:
+An online integrated development environment (IDE) for writing, testing, and deploying smart contracts.
+Other Notable Points
+Interaction with Nodes: The document likely details how users and applications interact with Ethereum nodes to submit transactions or query blockchain data.
+Transaction Lifecycle: Covers how transactions are processed, validated, and added to the blockchain.
+EVM Execution Model: Describes how the EVM executes bytecode and ensures isolation between smart contracts.
