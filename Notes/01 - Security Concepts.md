@@ -20,7 +20,7 @@ Além disso, são importantes os conceitos:
 
 Só alguns de vários exemplos:
 
-- Economu of Mechanisms / Keep it Simple;
+- Economy of Mechanisms / Keep it Simple;
 - Fail-safe default;
 - Zero Trust;
 - Opening design;
@@ -54,6 +54,6 @@ Por exemplo o `eavesdropping`, que não afecta os assets na rede mas consegue:
 Exemplos de ataques ativos (que modificam assets) na rede:
 
 - `Replay`: retransmissão para tentar um efeito não autorizado;
-- `Masquerade`: tenta  uma entidade diferente no canal de comunicação;
+- `Masquerade`: tenta uma entidade diferente no canal de comunicação;
 - `Modification of messages`;
 - `Denial of service`: inibir a utilização normal do serviço;
