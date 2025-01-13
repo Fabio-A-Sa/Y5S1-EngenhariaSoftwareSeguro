@@ -57,4 +57,3 @@ Exemplos de ataques ativos (que modificam assets) na rede:
 - `Masquerade`: tenta  uma entidade diferente no canal de comunicação;
 - `Modification of messages`;
 - `Denial of service`: inibir a utilização normal do serviço;
-
