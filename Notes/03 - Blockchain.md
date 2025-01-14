@@ -68,36 +68,23 @@ Users initiate a transaction by submitting data to the network. Block Creation: 
 ## Ethereum Blockchain
 
 Ethereum extends blockchain functionality by supporting smart contracts and decentralized applications (DApps).
-It features its own cryptocurrency, Ether (ETH).
-Nodes:
-Nodes in Ethereum store the blockchain’s state, process transactions, and execute smart contracts.
-8. Ethereum Virtual Machine (EVM) and Smart Contracts
-EVM:
-Acts as a decentralized computational environment where smart contracts are executed.
-Ensures security and prevents interference between contracts.
-Smart Contracts:
-Self-executing contracts with terms encoded directly in code.
-Used in various applications, including decentralized finance (DeFi) and automated processes.
-9. Types of Accounts and Transactions
-Accounts:
-Externally Owned Accounts (EOAs): Controlled by private keys (individuals or organizations).
-Contract Accounts: Smart contract accounts that execute code upon receiving transactions.
-Transactions:
-Include details such as sender, recipient, value, data payload, and gas fees.
-Must be signed with the sender’s private key for authentication.
-10. Gas and Fees
-Gas:
-A unit measuring the computational effort required to execute transactions or operations on the Ethereum network.
-Fees:
-Paid in Ether, gas fees incentivize miners or validators and regulate network usage to prevent spam.
-11. Developer Tools
-Geth Architecture:
-Geth (Go Ethereum) is a popular Ethereum client used to interact with the blockchain, deploy contracts, and manage nodes.
-Solidity Compiler:
-Converts Solidity code into bytecode that the EVM can execute.
-Remix IDE:
-An online integrated development environment (IDE) for writing, testing, and deploying smart contracts.
-Other Notable Points
+It features its own cryptocurrency, Ether (ETH). Nodes in Ethereum store the **blockchain’s state**, **process transactions**, and **execute smart contracts**.
+
+EVM (Ethereum Virtual Machine) acts as a decentralized computational environment where smart contracts are executed. Ensures security and prevents interference between contracts.
+Smart-Contracts are self-executing contracts with terms encoded directly in code. Used in various applications, including decentralized finance (DeFi) and automated processes.
+
+### Accounts
+
+- Externally Owned Accounts (EOAs): Controlled by private keys (individuals or organizations).
+- Contract Accounts: Smart contract accounts that execute code upon receiving transactions.
+
+### Transactions
+
+Include details such as sender, recipient, value, data payload, and gas fees. Must be signed with the sender’s private key for authentication.
+
+Gas - A unit measuring the computational effort required to execute transactions or operations on the Ethereum network.
+Fees - Paid in Ether, gas fees incentivize miners or validators and regulate network usage to prevent spam.
+
 Interaction with Nodes: The document likely details how users and applications interact with Ethereum nodes to submit transactions or query blockchain data.
 Transaction Lifecycle: Covers how transactions are processed, validated, and added to the blockchain.
 EVM Execution Model: Describes how the EVM executes bytecode and ensures isolation between smart contracts.
