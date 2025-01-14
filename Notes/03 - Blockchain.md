@@ -75,15 +75,15 @@ Smart-Contracts are self-executing contracts with terms encoded directly in code
 
 ### Accounts
 
-- Externally Owned Accounts (EOAs): Controlled by private keys (individuals or organizations).
-- Contract Accounts: Smart contract accounts that execute code upon receiving transactions.
+- `Externally Owned Accounts` (EOAs): Controlled by private keys (individuals or organizations);
+- `Contract Accounts`: Smart contract accounts that execute code upon receiving transactions;
 
 ### Transactions
 
 Include details such as sender, recipient, value, data payload, and gas fees. Must be signed with the sender’s private key for authentication.
 
-Gas - A unit measuring the computational effort required to execute transactions or operations on the Ethereum network.
-Fees - Paid in Ether, gas fees incentivize miners or validators and regulate network usage to prevent spam.
+- `Gas`: a unit measuring the computational effort required to execute transactions or operations on the Ethereum network;
+- `Fees` - paid in Ether, gas fees incentivize miners or validators and regulate network usage to prevent spam;
 
 Interaction with Nodes: The document likely details how users and applications interact with Ethereum nodes to submit transactions or query blockchain data.
 Transaction Lifecycle: Covers how transactions are processed, validated, and added to the blockchain.
