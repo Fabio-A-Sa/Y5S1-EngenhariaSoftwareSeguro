@@ -11,5 +11,11 @@
 - Existem EOAs (External Owned Accounts) controladas por private keys e Contract Accounts (smart contracts que executam código ao receber transações);
 - Gas é uma unidade de esforço computacional para executar transactions/operações;
 - Fees são pagas em Ether, são gas incentivos para validar e minerar;
+- HTTP é stateless, precisa de cookies para estabelecer sessões;
+- Session hijacking quando as cookies são transmitidas em clear text;
+- XSS quando o código direciona para sites maliciosos, CSRF quando usa cookie não expirada para fazer operações;
+- Autenticação interna por SSO e externa por PIV (Personal Identification Verification), usando smartcards;
+- OAuth usa authorization code & access token entre a o authorization server da aplicação e o resource server do serviço;
+- OpenID Connect extends OAuth para providenciar uma idenficação direta do utilizador, porque o OAuth só tem access tokens, são opacos à identificação;
 - 
 
