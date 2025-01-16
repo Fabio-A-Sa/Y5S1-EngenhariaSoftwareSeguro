@@ -17,5 +17,11 @@
 - Autenticação interna por SSO e externa por PIV (Personal Identification Verification), usando smartcards;
 - OAuth usa authorization code & access token entre a o authorization server da aplicação e o resource server do serviço;
 - OpenID Connect extends OAuth para providenciar uma idenficação direta do utilizador, porque o OAuth só tem access tokens, são opacos à identificação;
+- Incluir um state value para perguntar por authorization, and Proof Key for Code Exchange (PKCE) porque o session token pode ficar na cache;
+- Os tokens possuem source e targets que podem ser definidos;
+- JWT são Json Tokens, JWS (com assinatura, usada em APPs porque assim facilmente os end-users conseguirem check) e JWE (com encriptação, para casos confidenciais como recursos);
+- Os tokens devem ser short-lived, logo usam-se refresh-tokens, que são usados para requerer novos access tokens;
+- Bearer tokens simples para autorização de um resource server, mas não impedem que sejam roubados;
+- PoP tokens (proof of possession) faz com que o AuthZ associe uma key no momento da instanciação, sempre usando JWE. Para keys assimétricas o client stores both e o server a public, para keys simétricas o client and server stores both;
 - 
 
