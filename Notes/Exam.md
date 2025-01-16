@@ -23,5 +23,6 @@
 - Os tokens devem ser short-lived, logo usam-se refresh-tokens, que são usados para requerer novos access tokens;
 - Bearer tokens simples para autorização de um resource server, mas não impedem que sejam roubados;
 - PoP tokens (proof of possession) faz com que o AuthZ associe uma key no momento da instanciação, sempre usando JWE. Para keys assimétricas o client stores both e o server a public, para keys simétricas o client and server stores both;
+- Evita-se a geração de chaves se se usar Mutual TLS, mas aí usa-se a mesma assinatura para várias chaves;
 - 
 
