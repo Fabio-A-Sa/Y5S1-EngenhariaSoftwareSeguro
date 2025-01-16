@@ -24,5 +24,7 @@
 - Bearer tokens simples para autorização de um resource server, mas não impedem que sejam roubados;
 - PoP tokens (proof of possession) faz com que o AuthZ associe uma key no momento da instanciação, sempre usando JWE. Para keys assimétricas o client stores both e o server a public, para keys simétricas o client and server stores both;
 - Evita-se a geração de chaves se se usar Mutual TLS, mas aí usa-se a mesma assinatura para várias chaves;
+- TLS é uma adaptação do SSL (Secure Sockets Layer) que é um protocolo de transporte. TLS fica acima de TCP protocol e abaixo da Application Layer;
+- TLS é formado por Handshake (encription, MAC, authentication), Alert protocol (mensagens e errors), ChangeCypherSpec (update do cypher), Heartbeat (check link and prevent disconnection), Application/Record Protocol;
+- O TLS secure channel promove confidencialidade, integridade e autenticação;
 - 
-
