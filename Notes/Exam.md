@@ -27,4 +27,6 @@
 - TLS é uma adaptação do SSL (Secure Sockets Layer) que é um protocolo de transporte. TLS fica acima de TCP protocol e abaixo da Application Layer;
 - TLS é formado por Handshake (encription, MAC, authentication), Alert protocol (mensagens e errors), ChangeCypherSpec (update do cypher), Heartbeat (check link and prevent disconnection), Application/Record Protocol;
 - O TLS secure channel promove confidencialidade, integridade e autenticação;
+- HandShake: estabelecer a sessão, modo de enc, keys;
+- O payload leva MAC e o índice da trama;
 - 
