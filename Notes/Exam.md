@@ -35,4 +35,6 @@
 - SRP (Secure Remote Password), provar o conhecimento da password sem a transmitir (não eavesdropping or man-in-the-middle). Computa uma grande key (random big integer) baseada na password e em números previamente acordados, e tanto o server como o user têm de gerar o mesmo;
 - SRP precisa de um key generation server, confiado por todas as entidades;
 - SRP precisa de um nounce ou um timestamp para prevenção de replay attacks;
-- Kerberos, com authenticação baseada em tickets, 
+- FIDO (Fast Identity Online), através de dados biométricos ou devices externos com criptografia assimétrica. As chaves são geradas no momento do registo;
+- O FIDO server cria um binding entr
+- Kerberos, com authenticação baseada em tickets, requer Authentication Server (AS) e um Ticket Ganting Server (TGS);
