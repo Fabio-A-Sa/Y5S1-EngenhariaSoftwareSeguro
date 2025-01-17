@@ -38,3 +38,5 @@
 - FIDO (Fast Identity Online), através de dados biométricos ou devices externos com criptografia assimétrica. As chaves são geradas no momento do registo;
 - O FIDO server cria um binding entr
 - Kerberos, com authenticação baseada em tickets, requer Authentication Server (AS) e um Ticket Ganting Server (TGS);
+- Tickets têm timestamp, lifetime, a posse do ticket correcto provam a identidade do cliente;
+- As versões mais recentes do keberos proporcionam trocas/requests de tickets, partições e replicações;
