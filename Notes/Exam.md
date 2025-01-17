@@ -29,4 +29,7 @@
 - O TLS secure channel promove confidencialidade, integridade e autenticação;
 - HandShake: estabelecer a sessão, modo de enc, keys;
 - O payload leva MAC e o índice da trama;
+- Autenticação com cifras simétricas, usando um nouce para ser Enc pelos dos lados, pois só os endpoints conhecem a chave;
+- Autenticação com cifras assimétricas, pública/privada, apenas a pública dos endpoints é conhecida;
+- SCRAM Protocol, registration (id, password) + authentication (nouce);
 - 
