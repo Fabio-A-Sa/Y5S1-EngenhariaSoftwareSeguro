@@ -32,4 +32,7 @@
 - Autenticação com cifras simétricas, usando um nouce para ser Enc pelos dos lados, pois só os endpoints conhecem a chave;
 - Autenticação com cifras assimétricas, pública/privada, apenas a pública dos endpoints é conhecida;
 - SCRAM Protocol, registration (id, password) + authentication (nouce);
-- 
+- SRP (Secure Remote Password), provar o conhecimento da password sem a transmitir (não eavesdropping or man-in-the-middle). Computa uma grande key (random big integer) baseada na password e em números previamente acordados, e tanto o server como o user têm de gerar o mesmo;
+- SRP precisa de um key generation server, confiado por todas as entidades;
+- SRP precisa de um nounce ou um timestamp para prevenção de replay attacks;
+- Kerberos, com authenticação baseada em tickets, 
