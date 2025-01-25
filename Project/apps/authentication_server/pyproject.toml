@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "authentication-server"
+version = "0.1.0"
+description = ""
+authors = [
+    "André Costa Lima <up202008169@edu.fe.up.pt>",
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+flask = {extras = ["async"], version = "^3.1.0"}
+python-dotenv = "^1.0.1"
+bcrypt = "^4.0.1"
+cert-manager = {path = "../../packages/cert_manager", develop = true}
+gunicorn = "^23.0.0"
+secure-endpoints = {path = "../../packages/secure_endpoints", develop = true}
+flask-pydantic = "^0.12.0"
+utils = {path = "../../packages/utils", develop = true}
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.10.0"
+
+[tool.poetry.scripts]
+format = "black:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

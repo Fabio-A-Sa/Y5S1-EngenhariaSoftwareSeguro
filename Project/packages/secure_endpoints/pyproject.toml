@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "secure-endpoints"
+version = "0.1.0"
+description = ""
+authors = ["André Costa Lima <up202008169@edu.fe.up.pt>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+grequests = "^0.7.0"
+nonce = {path = "../nonce", develop = true}
+flask = "^3.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

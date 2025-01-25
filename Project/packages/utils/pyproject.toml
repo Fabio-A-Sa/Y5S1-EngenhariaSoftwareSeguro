@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "utils"
+version = "0.1.0"
+description = ""
+authors = ["André Costa Lima <up202008169@edu.fe.up.pt>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

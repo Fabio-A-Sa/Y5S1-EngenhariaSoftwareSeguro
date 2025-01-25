@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "cert-manager"
+version = "0.1.0"
+description = ""
+authors = [
+    "André Costa Lima <up202008169@edu.fe.up.pt>"
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+cryptography = "^44.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

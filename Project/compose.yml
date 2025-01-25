@@ -1,0 +1,214 @@
+services:
+  setup_workspace_script:
+    build:
+      context: .
+      dockerfile: deploy/scripts.containerfile
+    command: ["./bin/setup_workspace.sh"]
+    volumes:
+      - .:/app
+
+  mailpit:
+    image: axllent/mailpit:v1.20
+    environment:
+      - MP_DATABASE=/data/mailpit.db
+      - TZ=Europe/Lisbon
+    restart: always
+    depends_on:
+      setup_workspace_script:
+        condition: service_completed_successfully
+    volumes:
+      - .data/mailpit:/data
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
+  authentication_server:
+    build:
+      context: .
+      target: runner_dev
+      dockerfile: deploy/apps.containerfile
+      args:
+        APP_NAME: authentication_server
+        APP_PORT: 8081
+    restart: always
+    depends_on:
+      setup_workspace_script:
+        condition: service_completed_successfully
+    volumes:
+      - ./.data/authentication_server:/data
+    environment:
+      - DATA_DIR=/data
+    ports:
+      - "8081:8081"
+    networks:
+      default:
+        aliases:
+          - authentication-server.local
+    develop:
+      watch:
+        - path: ./apps/authentication_server
+          target: /app/apps/authentication_server
+          action: sync
+          ignore:
+            - poetry.lock
+            - .env
+        - path: ./apps/authentication_server/.env
+          target: /app/apps/authentication_server/.env
+          action: sync+restart
+        - path: ./apps/authentication_server/poetry.lock
+          target: /app/apps/authentication_server/poetry.lock
+          action: rebuild
+        - path: ./packages/cert_manager
+          target: /app/packages/cert_manager
+          action: sync
+        - path: ./packages/nonce
+          target: /app/packages/nonce
+          action: sync
+        - path: ./packages/secure_endpoints
+          target: /app/packages/secure_endpoints
+          action: sync
+        - path: ./packages/utils
+          target: /app/packages/utils
+          action: sync
+  
+  authorization_server:
+    build:
+      context: .
+      target: runner_dev
+      dockerfile: deploy/apps.containerfile
+      args:
+        APP_NAME: authorization_server
+        APP_PORT: 8082
+    restart: always
+    depends_on:
+      setup_workspace_script:
+        condition: service_completed_successfully
+    volumes:
+      - ./.data/authorization_server:/data
+    environment:
+      - DATA_DIR=/data
+    ports:
+      - "8082:8082"
+    networks:
+      default:
+        aliases:
+          - authorization-server.local
+    develop:
+      watch:
+        - path: ./apps/authorization_server
+          target: /app/apps/authorization_server
+          action: sync
+          ignore:
+            - poetry.lock
+            - .env
+        - path: ./apps/authorization_server/.env
+          target: /app/apps/authorization_server/.env
+          action: sync+restart
+        - path: ./apps/authorization_server/poetry.lock
+          target: /app/apps/authorization_server/poetry.lock
+          action: rebuild
+        - path: ./packages/cert_manager
+          target: /app/packages/cert_manager
+          action: sync
+        - path: ./packages/nonce
+          target: /app/packages/nonce
+          action: sync
+        - path: ./packages/secure_endpoints
+          target: /app/packages/secure_endpoints
+          action: sync
+        - path: ./packages/utils
+          target: /app/packages/utils
+          action: sync
+
+  resource_server:
+    build:
+      context: .
+      target: runner_dev
+      dockerfile: deploy/apps.containerfile
+      args:
+        APP_NAME: resource_server
+        APP_PORT: 8083
+    restart: always
+    depends_on:
+      setup_workspace_script:
+        condition: service_completed_successfully
+    volumes:
+      - ./.data/resource_server:/data
+    environment:
+      - DATA_DIR=/data
+    ports:
+      - "8083:8083"
+    networks:
+      default:
+        aliases:
+          - resource-server.local
+    develop:
+      watch:
+        - path: ./apps/resource_server
+          target: /app/apps/resource_server
+          action: sync
+          ignore:
+            - poetry.lock
+            - .env
+        - path: ./apps/resource_server/.env
+          target: /app/apps/resource_server/.env
+          action: sync+restart
+        - path: ./apps/resource_server/poetry.lock
+          target: /app/apps/resource_server/poetry.lock
+          action: rebuild
+        - path: ./packages/nonce
+          target: /app/packages/nonce
+          action: sync
+        - path: ./packages/secure_endpoints
+          target: /app/packages/secure_endpoints
+          action: sync
+        - path: ./packages/utils
+          target: /app/packages/utils
+          action: sync
+
+  web_server:
+    build:
+      context: .
+      target: runner_dev
+      dockerfile: deploy/apps.containerfile
+      args:
+        APP_NAME: web_server
+        APP_PORT: 8084
+    restart: always
+    depends_on:
+      setup_workspace_script:
+        condition: service_completed_successfully
+    volumes:
+      - ./.data/web_server:/data
+    environment:
+      - DATA_DIR=/data
+    ports:
+      - "8084:8084"
+    networks:
+      default:
+        aliases:
+          - web-server.local
+    develop:
+      watch:
+        - path: ./apps/web_server
+          target: /app/apps/web_server
+          action: sync
+          ignore:
+            - poetry.lock
+            - .env
+        - path: ./apps/web_server/.env
+          target: /app/apps/web_server/.env
+          action: sync+restart
+        - path: ./apps/web_server/poetry.lock
+          target: /app/apps/web_server/poetry.lock
+          action: rebuild
+        - path: ./packages/nonce
+          target: /app/packages/nonce
+          action: sync
+        - path: ./packages/secure_endpoints
+          target: /app/packages/secure_endpoints
+          action: sync
+        - path: ./packages/utils
+          target: /app/packages/utils
+          action: sync
+

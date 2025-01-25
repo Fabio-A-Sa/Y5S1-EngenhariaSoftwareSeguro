@@ -1,0 +1,416 @@
+\documentclass[10pt]{article}
+\usepackage[english]{babel}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{lscape}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{rotating}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\newcommand{\todo}[1]{{\color{red}\bfseries [[#1]]}}
+\graphicspath{ {./figures/} }
+
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+            {-2.5ex\@plus -1ex \@minus -.25ex}%
+            {1.25ex \@plus .25ex}%
+            {\normalfont\normalsize\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{4} 
+\setcounter{tocdepth}{4}   
+
+\begin{document}
+
+% HEADER PAGE
+\begin{titlepage}
+   \begin{center}
+       \vspace*{1cm}
+       {\fontsize{17}{20}\selectfont\textbf{Authentication and Authorization Mechanism Implementation as a Variation of OAuth Protocol}}
+
+       \vspace{0.5cm}
+       \textbf{Secure Software Engineering}
+            
+       \vspace{1.5cm}
+
+       \textbf{André Costa Lima, up202008169@up.pt}\\
+       \textbf{Eduardo Luís Tronjo Ramos, up201906732@up.pt}\\
+       \textbf{Fábio Araújo de Sá, up202007658@up.pt}\\
+       \textbf{Inês Sá Pereira Estêvão Gaspar, up202007210@up.pt}\\
+       
+       \vfill
+            
+       \includegraphics[width=0.6\textwidth]{figures/LogotipoSI.png}
+        
+       \vspace{2cm}
+            
+       December 2024
+            
+   \end{center}
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+
+\section{Introduction}
+
+The aim of this project was to design and implement a security mechanism, based on the OAuth protocol, which would make it possible to deal with the concepts of authentication and authorization of users of a web application when accessing resources stored on another server.
+
+Figure~\ref{fig:validation3} shows a diagram representing the organization of the system, as well as the actors and operations implemented in the proof of concept.
+
+\begin{center}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{figures/ESS-Diagram.png}
+            \caption{Diagram representing the proof of concept developed}
+        \label{fig:validation3}
+    \end{figure}
+\end{center}
+
+\section{System Requirements and Key Workflows}
+
+Several actors and components had to work together to implement authentication and authorization functionality based on the OAuth protocol, and certain functional and security requirements were met.
+
+\subsection{Actors and Components}
+
+The system was based on four essential parts that cooperated to guarantee secure authorization and authentication procedures. As the user's gateway, the client communicated with the web server to make access requests. Identity verification, role administration, and safe data storage were handled by the authentication, authorization, and resource servers, which ensured that every request was verified and appropriately managed.
+
+\begin{itemize}
+    \item \textbf{Web Application (Client)}: This web application acts as the intermediary between the user and resource server and is also able to redirect the user to the Authentication server for login purposes. It will also communicate with the authorization server to obtain resource access tokens.
+
+    \item \textbf{Authentication Server (AS)}: This server handles authentication with two-factor authentication by emailing the user a nonce. The server also comes with an SMTP service in order for the server to send and user to receive these emails. The server, through its certificate authority (CA), also creates short-lived certificates for the user. 
+
+    \item \textbf{Authorization Server (AuthZ Server)}: This server keeps a database with the roles of the users and resources that are accessible to each role. When the web server wants to exchange a certificate issued by the authentication server for a token, this server first ensures that the certificate is valid and that it is signed by the expected CA. Then, a token with the role of the user for which the certificate was issued is created and provided to the web server. When the resource server wants to authorize an operation, this server validates the token received and checks if the role in the token has access to the requested resource.
+
+    \item \textbf{Resource Server}: This server stores the resources and verifies the authenticity of the tokens received. Finally, it delivers the resource to an authorized user, but only after authorizing the operation with the authorization server.
+\end{itemize} 
+
+\subsection{Functional Requirements}
+
+To guarantee appropriate authorization and authentication procedures, the system must meet a number of functional requirements in the following workflows:
+
+\begin{itemize}
+    \item \textbf{Authentication Workflow}:
+        \begin{itemize}
+            \item The user requests access to a resource via web browser.
+            \item The web server redirects the user to the Authentication Server.
+            \item The Authentication Server performs two-factor authentication:
+            \begin{enumerate}
+                \item \textbf{First factor}: Username and password.
+                \item \textbf{Second factor}: OTP via email. 
+            \end{enumerate}
+            \item On successful authentication, the Authentication Server:
+            \begin{enumerate}
+                \item Issues a \textbf{short-lived certificate} containing the user’s identification, a timestamp, and validity.
+                \item \textbf{Signs the certificate} using its private key.
+            \end{enumerate}
+        \end{itemize}
+    \item \textbf{Authorization Workflow}:
+        \begin{itemize}
+            \item The web server sends the certificate to the Authorization Server to request a token.
+            \item The Authorization Server:
+            \begin{enumerate}
+                \item Issues a \textbf{token containing the user’s role(s)} and any required metadata.
+                \item Ensures the token is \textbf{encrypted} and \textbf{integrity-protected} to prevent tampering or inspection by unauthorized parties.
+            \end{enumerate}
+            \item The token is used by the web server to request resources from the Resource Server.
+            \item The Resource Server:
+            \begin{enumerate}
+                \item \textbf{Validates the token}.
+                \item Checks with the Authorization Server if the operation that is being performed is allowed, or not, for the token that was provided.
+            \end{enumerate}
+            \item If authorized, the Resource Server grants access to the resource.
+        \end{itemize}
+\end{itemize} 
+
+\subsection{Administration Operations}
+
+The system required administrative operations to manage users and permissions.
+
+\begin{itemize}
+    \item Authentication Server:
+        \begin{itemize}
+            \item Register users with:
+            \begin{enumerate}
+                \item Username/password.
+                \item Side-channel (email) verification at registration (nonce-based).
+            \end{enumerate}
+        \end{itemize}
+        \item Authorization Server:
+            \begin{itemize}
+                \item Manage roles.
+                \item Assign roles to users.
+                \item Define permissions for each role, specifying allowed resources and operations.
+            \end{itemize}
+\end{itemize}
+
+\subsection{Security Requirements}
+
+Strict security measures were necessary for the system to operate safely and dependably. These precautions were centered on data encryption, secure transmission, token protection, and certificate processing. Every criterion was created to protect data integrity and prevent unwanted access.
+
+\begin{itemize}
+    \item \textbf{Certificate Handling}:
+        \begin{enumerate}
+            \item The Authentication Server acts as a Certificate Authority (CA) and signs short-lived certificates.
+            \item Public keys of all servers (Authentication, Authorization, Resource, Web) must be verified and trusted.
+            \item Every server request includes:
+                \begin{itemize}
+                    \item ID and address of the client-server.
+                    \item Signature of the request using the client server’s private key.
+                \end{itemize}
+        \end{enumerate}
+    \item \textbf{Token Security}:
+        \begin{enumerate}
+            \item Tokens must have:
+                \begin{itemize}
+                    \item \textbf{Confidentiality}: Ensure only authorized parties can read the token.
+                    \item \textbf{Integrity}: Prevent token tampering.
+                \end{itemize}
+            \item Tokens should be cryptographically signed by the Authorization Server.
+        \end{enumerate}
+    \item \textbf{Communication Security}:
+        \begin{enumerate}
+            \item Use TLS for all communications to ensure confidentiality and integrity.
+            \item Servers must authenticate each other using certificates issued by a common CA.
+        \end{enumerate}
+    \item \textbf{Data Protection}:
+        \begin{enumerate}
+            \item Protect user credentials using industry standards.
+            \item Encrypt sensitive data in transit and at rest.
+        \end{enumerate}
+\end{itemize}
+
+With those requirements in mind, we started to develop our architecture and design our solution, as we will describe in the sections below.
+
+\section{Architecture}
+
+Regarding the architecture of the system, our implementation is divided into four separate servers, each implementing a key responsibility in the protocol:
+
+\begin{itemize}
+\item Authentication server, responsible for authenticating and providing an identity proof of the user.
+\item Authorization server, responsible for authorizing user operations.
+\item Resource server, responsible for storing and providing resources to users, while delegating authorization to the authorization server.
+\item Web server, responsible for providing an interface for the user and delegating responsibilities to the other servers.
+\end{itemize}
+
+Since these servers are meant to be deployed separately, we used Docker containers to simulate their isolation in terms of file systems and networks.
+
+\subsection{Communications protection}
+
+In a distributed setting, it is important to ensure integrity, confidentiality and authentication in the communications between servers. As such, for inter-server communication, TLS with client-side and server-side authentication was used. However, to do this, we first needed to have certificates with which we could authenticate the servers. 
+
+A self-signed ``Communications Certificate Authority" was created and we used it to sign four different certificates, one for each server, for the following DNS names: \textit{authentication-server.local}, \textit{authorization-server.local}, \textit{resource-server.local}, and \textit{web-server.local}. Then, the HTTPS servers on each server were configured to use these certificates and the corresponding private key. This provides server-side authentication for all communications.
+
+Regarding client-side authentication, a ``secure\_requests" library was developed. For a given request, the receiving server extracts the Common Name of the certificate of the sending server and checks if it is in the allowed list of common names for that endpoint. If it isn't, the request is aborted.
+
+\subsection{Proofs of Identity}
+
+To implement the proofs of identity using certificates, the Authentication server needs a Certificate Authority to issue the certificates - the ``Authentication Server Identity Certificate Authority". This certificate for this Certificate Authority is preloaded into the authentication server, along with its private key. On the authorization server side, only the certificate for it is preloaded, as this is all that is needed to verify the certificates for the proofs of identity. Sharing the private key would be a security risk.
+
+\section{Design Decisions and Implementation}
+
+In this section, we will describe the design and the implementation strategies to ensure that the requested security requirements were met, explaining how we ensured compliance with the principles of software security, CIA (Confidentiality, Integrity, and Availability).
+
+\subsection{Security Mechanisms}
+
+In order to ensure the most general security mechanisms at the server and communications level, the following solution was found:
+\begin{itemize}
+    \item \textbf{Server reliability and authentication:} all servers have a certificate signed by a CA in order to authenticate them and prove that they are valid and trustworthy, as well as being used to store each server's public and private keys;
+    \item \textbf{Confidentiality and Integrity in communications:} all communications ensure these properties since all messages exchanged in the system are protected using TLS, which provides confidentiality and integrity. On top of that, all messages are signed by the sender with its private key, and the signature is verified with its public key on the receiver. In addition to that, every message also contains the sender's ID and address. With client-side authentication in TLS, this guarantees that the message came from the sender in question and that it cannot have been altered (integrity), since no one else has access to its private key.
+\end{itemize}
+
+With these approaches, we can guarantee data protection, confidentiality, and integrity when transmitting information between servers.
+
+\subsection{Certificate Management}
+
+A custom Python class, \textbf{CertManager}, was implemented to handle certificate management. Leveraging the cryptography\footnote{Available online in: \url{https://pypi.org/project/cryptography/}} Python library, this class provides functionalities such as loading certificates and keys from files or raw data, creating certificate authorities (CAs) for issuing new certificates, generating certificates using existing CAs, and verifying certificates by validating their signatures and issuers. The `cryptography` library was selected due to its comprehensive feature set and ease of use. Furthermore, as a backend, it uses OpenSSL, which is a widely used library for performing cryptographic operations securely.
+
+Certificates and keys are stored in the PEM format, and robust security measures are in place to safeguard private keys. While the \textbf{Certificate} class encapsulates a certificate, offering verification and conversion methods, the \textbf{Key} class represents a private key, providing signing capabilities. The \textbf{CA} class represents a certificate authority, responsible for certificate issuance and is used across servers.
+
+\subsection{Authentication}
+
+As described in the section above, the Authentication Server is tasked with dealing with the user's login and registration. It must confirm the identity of a user by both its username and password and by a two-factor by way of a nonce sent by mail to the user. A user can be redirected back to the web server and start the authorization process only when confirmed. The server also has to allow an admin to add accounts and remove them as they see fit. In the subsection below we will go over our approach to this server.
+
+\subsubsection{Approach}
+
+The server runs inside a docker container and was written with the Python library Flask\footnote{Available on \url{https://flask.palletsprojects.com/en/stable/}}. This library provides us with a web framework that allows us to access the RESTful API and the flexibility with other Python libraries. One of the first practical ones was the SQLite3\footnote{Available online in: \url{https://www.sqlite.org/index.html}} library, which enabled us to configure the tables storing the users's usernames, passwords, and emails. We also store a table to store/archive the generated nonces as part of the two-factor authentication.
+
+If the user tries to log in through the web server, instead he is redirected to the authentication server. There the credentials are validated and, if they are correct, a nonce is generated using the system's random number generator and sent by email to the user. The mail we did was to establish an SMTP service on the server side and utilize the mail.mime.text\footnote{Available online in: \url{https://docs.python.org/3/library/email.html}} library. The user can then access their email by accessing the server IP in the web server's SMTP port. The user is now redirected back to the web server with the temporary certificate, generated by the CA, stored in the query parameters if the correct nonce is provided. However, if one of the steps above fails the user is bounced back to the beginning but no certificate is produced and the rest of the system is inaccessible.
+
+For the sake of guarantees that security principles are protected, any sensible stored value, for example, a password, is hashed/salted). Certificate delivery is secured also by the use of encryption by the public keys of each server to preserve the integrity and confidentiality of the information that is being exchanged.
+
+\subsubsection{Results and Examples} \label{section:authentication-results}
+
+In the actual project, a registration and login endpoint was implemented in the authentication server. The login page appears in this way:
+
+\begin{center}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{figures/login.png}
+            \caption{User Login Page}
+        \label{fig:login}
+    \end{figure}
+\end{center}
+
+The registration page is shown like this:
+
+\begin{center}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{figures/register.png}
+            \caption{User Registration Page}
+        \label{fig:registration}
+    \end{figure}
+\end{center}
+
+
+Both the registration and login pages produce a nonce that is then used to verify the purported identity. This nonce, generated using the \texttt{nonce} Python library. This is a custom library written by us, that takes the current time and uses the system's entropy to ensure that a truly random number is employed in the generation of a unique nonce. After its creation, it is then sent over by email using the server's built-in SMTP. The email looks like this:
+
+\begin{center}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{figures/email.png}
+            \caption{Example of email sent}
+        \label{fig:email}
+    \end{figure}
+\end{center}
+
+And the nonce verification page looks as such:
+
+\begin{center}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{figures/verify.png}
+            \caption{Nonce Verification Page}
+        \label{fig:verification}
+    \end{figure}
+\end{center}
+
+The nonce takes into account the time of the request for its creation, which can lead to some security concerns, as we will discuss further. After the nonce is sent and the user receives their email, they are redirected to a verification page where the nonce will be requested. After a successful verification, a user will either be logged in or registered, depending on the requested operation.
+
+The admin can then change the user's permissions using the admin panel contained in the server. In the current implementation, this panel is unprotected for ease of use and testing in a development environment. In a real-world application, we would restrict its access using an \texttt{.htaccess} file in the Apache servers hosting the project. This file would allow us to restrict the endpoints accessed by users, only permitting certain IPs, such as the one used by the admin.
+
+After the user is logged in, a certificate is issued for the user using the server's Certificate Authority (CA). The CA's private key is stored within the server's code. The certificate is then sent in the headers while the user is redirected back to the web server.
+
+Any user who incorrectly inputs the nonce or any other authentication information, such as the password or email, will be prohibited from logging in and accessing the protected resources.
+
+\subsubsection{Security Concerns}
+
+\subsubsection*{Admin Panel Accessibility}
+
+The admin panel is currently public and accessible to all. This can be addressed by the method explained above, using \texttt{.htaccess} to restrict access.
+
+\subsubsection*{Nonce Brute Force Attack}
+If an attacker knows someone is making a login attempt and knows the user's email, they could attempt to brute-force their way through the verification page by trying all possible nonce values before the expiration time of 5 minutes. However, this attack is challenging due to several factors:
+\begin{itemize}
+    \item The large number of possible values for the nonce.
+    \item The high entropy of the nonce ensures its high degree of randomness, making it extremely difficult to predict or anticipate.
+    \item The short time frame for the nonce to expire.
+    \item The legitimate user will also be trying to log in, which will consume the nonce, making further attempts by the attacker pointless.
+\end{itemize}
+
+While this attack is technically possible, it is very difficult to accomplish as the attacker would need to know the victim's email, and the exact time of the login attempt, and have the luck to find the correct value within the short expiration window.
+
+\subsubsection*{Storage of Sensitive Information}
+
+All the passwords of the users are stored in hashed form in the authentication server's database. The hashes also use salt, making them much harder to brute force if any data leak were to happen. We use the bcrypt\footnote{Available online in: \url{https://pypi.org/project/bcrypt/}} library to not only generate the salt, but also, hash the passwords, ensuring that they are properly hashed. However, they are still vulnerable to rainbow tables. Although a much more cumbersome method of brute-forcing, it remains a very real possibility. 
+
+To mitigate this attack, pepper was going to be used, but due to time constraints, we were forced to abandon this issue as more important features required attention. With that said, we still believe that the salted hashed passwords offer strong protection that meets the needs of this project.
+
+\vspace{1em}
+
+For the reasons stated above, we can confidently state that our authentication approach offers the necessary security requirements for the project at hand.
+
+\subsection{Authorization}
+The Authorization Server, as mentioned in previous sections, has the main function of verifying user permissions to access resources. In addition to this function, it is also responsible for validating certificates and sending authorization tokens. This server must allow the administrator to manage the system's resources and users.
+
+\subsubsection{Approach}
+
+This server runs in an independent Docker container and is written in Flask.
+In terms of implementing Role-Based Access Control, it was done as follows: a user has a role, and a role has operations. In this case, operations are just the resources that can be accessed. Here's an example of this structure:
+
+
+\[User A -> Role 1 -> Operation 1: feup.png\]
+\[User B -> Role 2 -> Operation 2: feup.png, codigos\_nucleares.text\]
+
+In terms of functionality, the authorization server receives a message from the web server with the certificate of the user who has authenticated to the system and validates the user's certificate (from the authentication server) by verifying the signature, thus confirming that the authentication came from a trusted server. Once the verification is complete, the authorization server sends a token containing the user's role encrypted symmetrically with their key to the web server. From there, the web server forwards the encrypted token to the resource\_server, which in turn forwards the encrypted token to the authorization\_server along with the resource the user wants to access.
+Thus, the authorization\_server receives the encrypted token and the resource. From there, it decrypts the token and gains access to the user's role, which it uses to check whether they have permission to access the resource sent.
+If the user has the necessary permissions, they are redirected to the file download route; if they don't, they are redirected to a page informing them that they don't have permission to carry out the desired operation.
+
+\subsubsection{Results and Examples}
+
+On to the implementation and access pages for the resources. Access begins when the user goes to the home page and clicks on the resource they want to download (Figure \ref{fig:MainPage}). From there, the user is redirected to the login page which proceeds with the rest of the authentication functionality explained in Section \ref{section:authentication-results}.
+
+\begin{center}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{figures/MainPage.png}
+            \caption{Main Page with a list of resources}
+        \label{fig:MainPage}
+    \end{figure}
+\end{center}
+
+After logging in, the user is redirected to the main page and if the user has access to the resource they clicked on, the document is downloaded (Figure \ref{fig:download} and \ref{fig:download1}); if they don't, they are redirected to a page informing them that they don't have permissions (Figure \ref{fig:noPermissionPage}).
+
+\begin{center}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{figures/Download.png}
+            \caption{Download of the file that the users wanted to access}
+        \label{fig:download}
+    \end{figure}
+\end{center}
+
+\begin{center}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{figures/Download2.png}
+            \caption{Image of the file downloaded}
+        \label{fig:download1}
+    \end{figure}
+\end{center}
+
+\begin{center}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{figures/ForbiddenAccess.png}
+            \caption{No permissions page to access the resource}
+        \label{fig:noPermissionPage}
+    \end{figure}
+\end{center}
+
+Regarding the admin pages, they were implemented taking into account the admin page that Flask-AdminSQLAlchemy\footnote{Available online in: \url{https://flask-admin.readthedocs.io/en/latest/index.html}} provides. This page allows you to manage users, roles, and operations (resources), such as adding, editing, and removing instances (Figure \ref{fig:administration1} and \ref{fig:administration2}).
+
+\begin{center}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{figures/AdminPage.png}
+            \caption{Administration Page that allows the management of users, roles, and operations}
+        \label{fig:administration1}
+    \end{figure}
+\end{center}
+
+\begin{center}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{figures/AdminPage2.png}
+            \caption{Administration Page that allows the addition of users, roles, and operations}
+        \label{fig:administration2}
+    \end{figure}
+\end{center}
+
+\subsubsection{Security Concerns}
+
+\subsubsection* {Admin Panel Accessibility}
+
+As stated in the subsection above the admin panel is currently public and accessible by all and thus can be addressed by the method explained above, using \texttt{.htaccess} to restrict access.
+
+\section{Conclusion}
+
+This project successfully delivered an authentication and authorization mechanism based on the OAuth protocol, fulfilling the required functional and security objectives. 
+
+The implemented system integrates key components — Authentication Server, Authorization Server, Resource Server, and Web Client — ensuring secure authentication and role-based access control. Features such as two-factor authentication, short-lived certificates, and encrypted communications with nonce were implemented to enhance security and mitigate risks.
+
+The design adheres to essential principles of confidentiality, integrity, and availability, ensuring secure data handling and reliable access management. The project demonstrates a practical and effective approach to implementing a secure and scalable authorization system.
+
+\end{document}
