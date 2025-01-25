@@ -2,7 +2,7 @@
 
 This repository contains all the exercises and assessments of the UC Engenharia de Software Seguro, taught by [António Pimenta Monteiro](https://sigarra.up.pt/feup/pt/func_geral.formview?p_codigo=209582) at [Master in Informatics and Computing Engineering](https://sigarra.up.pt/feup/pt/cur_geral.cur_view?pv_curso_id=22862) [MEIC] at the [Faculty of Engineering of the University of Porto](https://sigarra.up.pt/feup/pt/web_page.Inicial) [FEUP]. <br> <br>
 
-<h2 align = "center" >Final Grade: __/20</h2>
+<h2 align = "center" >Final Grade: 17/20</h2>
 <p align = "center" >
   <img 
        title = "FEUP logo"
@@ -17,13 +17,20 @@ This repository contains all the exercises and assessments of the UC Engenharia 
 
 Notes that I take during theoretical lectures in Markdown <br>
 
-### Project (Grade: __/20)
+### Labs (Grade 20/20)
 
-In progress
+[Here](./Labs/)
+
+### Project (Grade: 18.1/20)
+
+[Here](./Project/)
 
 #### Members
 
-In progress
+- André Costa Lima (up202008169)
+- Eduardo Luís Tronjo Ramos (up201906732)
+- Fábio Araújo de Sá (up202007658)
+- Inês Sá Pereira Estêvão Gaspar (up202007210)
 
 **@ Fábio Araújo de Sá** <br>
 **2024/2025**
